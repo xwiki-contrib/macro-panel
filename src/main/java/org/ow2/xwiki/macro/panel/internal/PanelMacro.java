@@ -43,7 +43,7 @@ import org.xwiki.rendering.syntax.Syntax;
 import org.xwiki.rendering.transformation.MacroTransformationContext;
 
 /**
- * Example Macro.
+ * This is a really simple java macro to replace the old velocity based #panel...
  */
 @Component("panel")
 public class PanelMacro extends AbstractMacro<PanelMacroParameters>
@@ -72,14 +72,22 @@ public class PanelMacro extends AbstractMacro<PanelMacroParameters>
     public List<Block> execute(PanelMacroParameters parameters, String content, MacroTransformationContext context)
         throws MacroExecutionException {
 
+        // Build structure is the following:
+        // panel (group)
+        // * title (header)
+        // * content (group)
+        // ** [any parsed content] (document->first child)
+
         Block title = new WordBlock(parameters.getTitle());
         Block header = new HeaderBlock(Collections.singletonList(title), HeaderLevel.LEVEL1);
         header.setParameter("class", "xwikipaneltitle");
 
+        // FIXME is a space the right thing to place in the group when there is no content ?
         Block xdom = new SpaceBlock();
         if (content != null) {
             try {
 
+                // FIXME to be replaced by MacroContentParser when available
                 Parser parser = manager.lookup(Parser.class, context.getSyntax().toIdString());
                 xdom = parser.parse(new StringReader(content));
                 xdom = xdom.getChildren().iterator().next();
