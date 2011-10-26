@@ -1,0 +1,26 @@
+.runTransformations
+.#-----------------------------------------------------
+.input|xwiki/2.0
+.# Test the macro in standalone mode
+.#-----------------------------------------------------
+{{panel title="hello" /}}
+.#-----------------------------------------------------
+.expect|xhtml/1.0
+.#-----------------------------------------------------
+.#<!--startmacro:panel|-|title="hello"--><div class="panel expanded"><h1 class="xwikipaneltitle">hello</h1><div class="xwikipanelcontents">&nbsp;</div></div><!--stopmacro-->
+<div class="panel expanded"><h1 class="xwikipaneltitle wikigeneratedheader"><span>hello</span></h1><div class="xwikipanelcontents">&nbsp;</div></div>
+.#-----------------------------------------------------
+.expect|event/1.0
+.#-----------------------------------------------------
+beginDocument
+beginMacroMarkerStandalone [panel] [title=hello]
+beginGroup [[class]=[panel expanded]]
+beginHeader [1, null] [[class]=[xwikipaneltitle]]
+onWord [hello]
+endHeader [1, null] [[class]=[xwikipaneltitle]]
+beginGroup [[class]=[xwikipanelcontents]]
+onSpace
+endGroup [[class]=[xwikipanelcontents]]
+endGroup [[class]=[panel expanded]]
+endMacroMarkerStandalone [panel] [title=hello]
+endDocument
