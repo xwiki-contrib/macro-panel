@@ -23,12 +23,18 @@ import java.io.StringReader;
 import java.util.Collections;
 import java.util.List;
 import java.util.Arrays;
+import java.util.Map;
 
+import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.velocity.VelocityContext;
 import org.ow2.xwiki.macro.panel.PanelMacroParameters;
+import org.xwiki.bridge.DocumentModelBridge;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.annotation.Requirement;
 import org.xwiki.component.manager.ComponentLookupException;
 import org.xwiki.component.manager.ComponentManager;
+import org.xwiki.context.Execution;
+import org.xwiki.context.ExecutionContext;
 import org.xwiki.rendering.block.Block;
 import org.xwiki.rendering.block.GroupBlock;
 import org.xwiki.rendering.block.HeaderBlock;
@@ -39,7 +45,6 @@ import org.xwiki.rendering.macro.AbstractMacro;
 import org.xwiki.rendering.macro.MacroExecutionException;
 import org.xwiki.rendering.parser.ParseException;
 import org.xwiki.rendering.parser.Parser;
-import org.xwiki.rendering.syntax.Syntax;
 import org.xwiki.rendering.transformation.MacroTransformationContext;
 
 /**
@@ -56,6 +61,9 @@ public class PanelMacro extends AbstractMacro<PanelMacroParameters>
     @Requirement
     private ComponentManager manager;
     
+    @Requirement
+    private Execution execution;
+
     /**
      * Create and initialize the descriptor of the macro.
      */
@@ -102,11 +110,39 @@ public class PanelMacro extends AbstractMacro<PanelMacroParameters>
         GroupBlock contentGroup = new GroupBlock(Collections.singletonList(xdom));
         contentGroup.setParameter("class", "xwikipanelcontents");
 
+        String name = findPageName();
+        String classAttribute = "panel expanded";
+        if (name != null) {
+            // If name is found, escape the value and add it as a class attribute
+            // This allows per panel style customization
+            classAttribute += " ";
+            classAttribute += StringEscapeUtils.escapeHtml(name);
+        }
         Block panelGroup = new GroupBlock(Arrays.asList(header, contentGroup));
-        panelGroup.setParameter("class", "panel expanded");
+        panelGroup.setParameter("class", classAttribute);
 
         return Collections.singletonList(panelGroup);
 
+    }
+
+    /**
+     * This is a bit of a hack to find the page "hosting" this panel definition.
+     * @return the panel page name
+     */
+    private String findPageName() {
+
+        DocumentModelBridge page = null;
+        try {
+            ExecutionContext executionContext = this.execution.getContext();
+            Map<String, Object> xwikiContext = (Map<String, Object>) executionContext.getProperty("xwikicontext");
+            VelocityContext velocityContext = (VelocityContext) xwikiContext.get("vcontext");
+            page = (DocumentModelBridge) velocityContext.get("paneldoc");
+        } catch (Throwable e) {
+            // TODO log an error
+            return null;
+        }
+
+        return page.getDocumentReference().getName();
     }
 
     /**

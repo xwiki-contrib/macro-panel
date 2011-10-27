@@ -25,13 +25,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.xwiki.rendering</groupId>
-  <artifactId>xwiki-rendering-archetype-macro</artifactId>
+  <artifactId>xwiki-rendering-panel-macro</artifactId>
   <version>3.0</version>
-  <name>XWiki Macro - Example</name>
-  <description>XWiki Macro - Example</description>
+  <name>XWiki Panel Macro</name>
+
   <properties>
     <rendering.version>3.0</rendering.version>
+    <commons.version>3.0</commons.version>
   </properties>
+
   <build>
     <plugins>
       <plugin>
@@ -60,12 +62,33 @@
       <groupId>org.xwiki.rendering</groupId>
       <artifactId>xwiki-rendering-syntax-wikimodel</artifactId>
       <version>${rendering.version}</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.xwiki.rendering</groupId>
       <artifactId>xwiki-rendering-transformation-macro</artifactId>
       <version>${rendering.version}</version>
+      <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-core-bridge</artifactId>
+      <version>3.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.commons</groupId>
+      <artifactId>xwiki-commons-context</artifactId>
+      <version>${commons.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.velocity</groupId>
+      <artifactId>velocity</artifactId>
+      <version>1.7</version>
+      <scope>provided</scope>
+    </dependency>
+
     <!-- Testing dependencies -->
     <dependency>
       <groupId>org.xwiki.rendering</groupId>
