@@ -24,9 +24,9 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.xwiki.rendering</groupId>
+  <groupId>org.xwiki.contrib</groupId>
   <artifactId>xwiki-rendering-panel-macro</artifactId>
-  <version>3.0</version>
+  <version>1.0-SNAPSHOT</version>
   <name>XWiki Panel Macro</name>
 
   <properties>
@@ -101,15 +101,15 @@
 
   <repositories>
     <repository>
-          <id>xwiki-releases</id>
-          <name>XWiki Nexus Releases Repository Proxy</name>
-          <url>http://nexus.xwiki.org/nexus/content/groups/public</url>
-          <releases>
-            <enabled>true</enabled>
-          </releases>
-          <snapshots>
-            <enabled>false</enabled>
-          </snapshots>
-        </repository>
+      <id>xwiki-releases</id>
+      <name>XWiki Nexus Releases Repository Proxy</name>
+      <url>http://nexus.xwiki.org/nexus/content/groups/public</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
   </repositories>
 </project>
