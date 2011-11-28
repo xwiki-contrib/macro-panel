@@ -35,6 +35,7 @@
   </properties>
 
   <build>
+    <finalName>${project.artifactId}-${maven.build.timestamp}</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
