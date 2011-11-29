@@ -38,7 +38,7 @@
 
   <properties>
     <rendering.version>3.3-milestone-1</rendering.version>
-    <platform.version>3.0.1</platform.version>
+    <platform.version>3.3-milestone-1</platform.version>
   </properties>
 
   <build>
@@ -83,7 +83,7 @@
       <!-- This module contains component still using the AbstractLogEnabled class -->
       <!-- And this is causing class-loading error when executing tests -->
       <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-core-bridge</artifactId>
+      <artifactId>xwiki-platform-bridge</artifactId>
       <version>${platform.version}</version>
       <scope>provided</scope>
     </dependency>
