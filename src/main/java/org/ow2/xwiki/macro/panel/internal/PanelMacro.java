@@ -25,12 +25,14 @@ import java.util.List;
 import java.util.Arrays;
 import java.util.Map;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.velocity.VelocityContext;
 import org.ow2.xwiki.macro.panel.PanelMacroParameters;
 import org.xwiki.bridge.DocumentModelBridge;
 import org.xwiki.component.annotation.Component;
-import org.xwiki.component.annotation.Requirement;
 import org.xwiki.component.manager.ComponentLookupException;
 import org.xwiki.component.manager.ComponentManager;
 import org.xwiki.context.Execution;
@@ -50,7 +52,8 @@ import org.xwiki.rendering.transformation.MacroTransformationContext;
 /**
  * This is a really simple java macro to replace the old velocity based #panel...
  */
-@Component("panel")
+@Component
+@Named("panel")
 public class PanelMacro extends AbstractMacro<PanelMacroParameters>
 {
     /**
@@ -58,10 +61,10 @@ public class PanelMacro extends AbstractMacro<PanelMacroParameters>
      */
     private static final String DESCRIPTION = "Panel Macro";
 
-    @Requirement
+    @Inject
     private ComponentManager manager;
     
-    @Requirement
+    @Inject
     private Execution execution;
 
     /**
